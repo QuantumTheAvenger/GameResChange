@@ -1,5 +1,3 @@
-
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -8,28 +6,28 @@ plugins {
 
 android {
     namespace = "com.game.reschange"
-    compileSdk = 30
+    compileSdk = 34  // DÜZELTME 1: Modern kütüphaneler için 30 yerine 34 yaptık.
 
     defaultConfig {
         applicationId = "com.game.reschange"
         minSdk = 26
-        targetSdk = 30
+        targetSdk = 34 // DÜZELTME 2: compileSdk ile uyumlu olması için 34 yaptık.
         versionCode = 6
         versionName = "1.5"
+
+        // DÜZELTME 3: NDK filtresini Kotlin'e uygun en temiz hale getirdik.
         ndk {
-            abiFilters.add("armeabi-v7a")
+            abiFilters += "armeabi-v7a"
         }
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    // Don't fail the build on lint errors
-    // Skip lint in release builds
-    // disable specific checks:
+    // Hataları görmezden gelip derlemeyi zorlamak için (Güvenlik önlemi)
     lint {
-        abortOnError = false         // Don't fail the build on errors
-        checkReleaseBuilds = false   // Disable lint for release builds
-        disable.addAll(listOf("MissingTranslation", "UnusedResources")) // Disable specific checks
+        abortOnError = false
+        checkReleaseBuilds = false
+        disable.addAll(listOf("MissingTranslation", "UnusedResources"))
     }
 
     buildTypes {
@@ -40,9 +38,11 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            // Debug anahtarını release için kullanıyoruz (GitHub Actions hatasını önler)
             signingConfig = signingConfigs.getByName("debug")
         }
     }
+    
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -56,7 +56,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -66,9 +65,13 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.recyclerview)
+    
+    // Xposed için gerekli
     compileOnly("de.robv.android.xposed:api:82")
+    
     implementation(libs.androidx.appcompat)
     implementation("com.google.android.material:material:1.11.0")
+    
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
