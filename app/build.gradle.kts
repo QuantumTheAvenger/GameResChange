@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.game.reschange"
-    compileSdk = 34  // DÜZELTME: Compose için 30'dan 34'e yükseltildi.
+    compileSdk = 35  // DÜZELTME: Compose için 30'dan 34'e yükseltildi.
 
     defaultConfig {
         applicationId = "com.game.reschange"
         minSdk = 26
-        targetSdk = 34 // DÜZELTME: compileSdk ile uyumlu olması için 34 yapıldı.
+        targetSdk = 35 // DÜZELTME: compileSdk ile uyumlu olması için 34 yapıldı.
         versionCode = 6
         versionName = "1.5"
 
