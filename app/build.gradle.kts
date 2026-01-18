@@ -6,16 +6,16 @@ plugins {
 
 android {
     namespace = "com.game.reschange"
-    compileSdk = 34  // DÜZELTME 1: Modern kütüphaneler için 30 yerine 34 yaptık.
+    compileSdk = 34  // DÜZELTME: Compose için 30'dan 34'e yükseltildi.
 
     defaultConfig {
         applicationId = "com.game.reschange"
         minSdk = 26
-        targetSdk = 34 // DÜZELTME 2: compileSdk ile uyumlu olması için 34 yaptık.
+        targetSdk = 34 // DÜZELTME: compileSdk ile uyumlu olması için 34 yapıldı.
         versionCode = 6
         versionName = "1.5"
 
-        // DÜZELTME 3: NDK filtresini Kotlin'e uygun en temiz hale getirdik.
+        // DÜZELTME: NDK hatasını çözen en temiz yazım
         ndk {
             abiFilters += "armeabi-v7a"
         }
@@ -23,11 +23,10 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    // Hataları görmezden gelip derlemeyi zorlamak için (Güvenlik önlemi)
+    // Olası küçük hataları görmezden gelip derlemeyi bitirmesi için:
     lint {
         abortOnError = false
         checkReleaseBuilds = false
-        disable.addAll(listOf("MissingTranslation", "UnusedResources"))
     }
 
     buildTypes {
@@ -38,7 +37,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            // Debug anahtarını release için kullanıyoruz (GitHub Actions hatasını önler)
             signingConfig = signingConfigs.getByName("debug")
         }
     }
@@ -66,7 +64,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.recyclerview)
     
-    // Xposed için gerekli
+    // Xposed API (Bu doğru, dokunmadık)
     compileOnly("de.robv.android.xposed:api:82")
     
     implementation(libs.androidx.appcompat)
